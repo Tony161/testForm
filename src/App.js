@@ -1,26 +1,45 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import Form from "./forms/addUser/form";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+// import AddDataAction from "./redux/actions";
+
+class App extends Component {
+  render() {
+    return (
+      <div>
+        <div>
+          <button onClick={this.props.showUser}>
+            Открыть диалог пользователя
+          </button>
+        </div>
+
+        {this.props.showUser1 && <Form  data ={{
+            show: this.props.showUser1, 
+            cbResult : this.props.showUser}}  
+          />
+        }
+      </div>
+    );
+  }
 }
 
-export default App;
+const mapStateToProps = state => {
+  return {
+    // data: store.data
+    showUser1: state.addUser.show
+  };
+};
+
+function mapDispatchToProps(dispatch) {
+  return {
+    showUser: () => dispatch({ type: "showUser" })
+    
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
+
+// в наш компонент App, с помощью connect(mapStateToProps)
+// export default connect(mapStateToProps)(App)
