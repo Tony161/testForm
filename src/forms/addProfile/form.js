@@ -1,13 +1,19 @@
 import React from "react";
+import add from "./actions/add";
 
 // import { sizing } from "@material-ui/system";
 import {
+  // Container,
   Box,
+  // Grid,
+  // Modal,
   Input,
   Button,
+  // TextField,
   Dialog,
   DialogActions,
   DialogContent,
+  // DialogContentText,
   DialogTitle,
   Checkbox,
   Select,
@@ -24,6 +30,7 @@ const useStyles = makeStyles(theme => ({
 
 export default function Form(data) {
   // const [open, setOpen] = React.useState(false);
+
   // const [selector, setSelector] = React.useState('');
 
   const [state, setState] = React.useState({
@@ -37,12 +44,12 @@ export default function Form(data) {
   });
 
   const handleChange = name => event => {
-    console.log("handleChange", name, event.target.checked);
+    // console.log("handleChange", name, event.target.checked);
     setState({ ...state, [name]: event.target.checked });
   };
 
   const handleSelect = name => event => {
-    console.log("handleChange", name, event.target.value);
+    // console.log("handleChange", name, event.target.value);
     setState({ ...state, [name]: event.target.value });
   };
 
@@ -124,30 +131,37 @@ export default function Form(data) {
 
   const classes = useStyles();
 
+  // const handleClickOpen = () => {
+  //   setOpen(true);
+  // };
+
   const handleClose = () => {
-    data.data.cbResult();
+    console.log(state);
+    data.data.cbResult(state);
+    //setState({ ...state, [name]: event.target.value });
+    // setOpen(false);
   };
 
-  const sendDataForm = () => {
-    data.data.cbResult(
-      state.archive,
-      state.command,
-      state.comment,
-      state.deadZone,
-      state.default,
-      state.name,
-      state.type
-    );
+  const handlePost = () => {
+    // console.log("23", data.data.postData());
+    // postDataProfile(state);
+    //reducer(undefined,'postDataProfile');
+    add(state);
+    console.log("вызвали редусер");
   };
 
+  // console.log("data",data)
   return (
     <div>
+      {/* <Button variant="outlined" color="primary" onClick={handleClickOpen}>
+        Open form dialog
+      </Button> */}
       <Dialog
         open={data.data.show} //{open}
         onClose={handleClose}
         aria-labelledby="form-dialog-title"
       >
-        <DialogTitle id="form-dialog-title">Form user</DialogTitle>
+        <DialogTitle id="form-dialog-title">Form profile</DialogTitle>
         <DialogContent>
           <div className={classes.container} style={{ width: "100%" }}>
             <Box
@@ -248,7 +262,7 @@ export default function Form(data) {
           <Button onClick={handleClose} color="primary">
             Отмена
           </Button>
-          <Button onClick={() => sendDataForm} color="primary">
+          <Button onClick={handlePost} color="primary">
             OK
           </Button>
         </DialogActions>

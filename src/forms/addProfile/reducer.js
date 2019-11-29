@@ -4,8 +4,10 @@ const initialState = {
 
 export default function rootReducer(state = initialState, action) {
   switch (action.type) {
-    case "showUser":
+    case "showProfile":
       return { show: !state.show };
+    case "postDataProfile":
+      return { dataProfile: state }  
     default:
       return state;
   }
